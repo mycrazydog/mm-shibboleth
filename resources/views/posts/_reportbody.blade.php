@@ -1,12 +1,31 @@
 <section class='invoice'>
 
 	<div class="row">
-		<div class="col-md-12">	
-		  <a href="{{ url('manage/reports-print') }}" target="_blank" class="btn btn-success no-print"><i class="fa fa-print"></i> Print</a>
+		<div class="col-md-12">
+{!! Form::open(['method' => 'GET']) !!}	
+
+@if( ! empty($staff_id))	
+{!! Form::hidden('staff_id', $staff_id) !!}
+@endif
+		  
+		  {!! Form::hidden('print', 1) !!}
+		  <button type="submit" class="btn btn-success no-print"><i class="fa fa-print"></i> Print</button>
 		  <h2 class="page-header">
 		    <i class="fa fa-globe"></i> Full Report
 		    <small class="pull-right">Date: {{ date('F d, Y', strtotime($today)) }}</small>
 		  </h2>
+{!! Form::close() !!}
+@if( ! empty($staff_options))		  
+{!! Form::open(['method' => 'GET']) !!}			  
+        <div class="col-sm-9">              
+          {!! Form::select('staff_id', $staff_options, $staff_id, ['class' => 'form-control', 'placeholder' => 'Please select a staff member']) !!}
+        </div>
+        <div class="col-sm-3">
+          <button type="submit" class="btn btn-info pull-right btn-block btn-sm">Sort</button>
+        </div>
+            
+{!! Form::close() !!}
+@endif
 		</div> 
 	</div> 
 	

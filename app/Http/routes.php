@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'manage'], function() {
     Route::resource('sources', 'SourcesController');
     Route::resource('staff', 'StaffController');
     Route::get('reports', 'ReportsController@index');
-    Route::get('reports-print', 'ReportsController@pagePrint');
+
 
 
     # Admin Routes

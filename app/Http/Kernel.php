@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
 'notCurrentUser' => \App\Http\Middleware\SentinelNotCurrentUser::class,
 'redirectAdmin' => \App\Http\Middleware\SentinelRedirectAdmin::class,
 'shibboleth' => \App\Http\Middleware\ShibbolethAuthenticate::class,
+'owner' => 'App\Http\Middleware\OwnerMiddleware',
         
         
 

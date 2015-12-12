@@ -32,8 +32,27 @@
 	
 		<button type="submit" class="btn btn-primary">Submit</button>
 		
+		{!! Form::close() !!}
+			@if(Sentinel::getUser()->inRole('admins'))	
+			{!! Form::open([
+			        'route' => array('manage.posts.destroy', $post->id),
+			        'method' => 'delete',
+			        'style' => 'display:inline'
+			   ])
+			!!}
+			    <button class='btn btn-danger' type='button' data-toggle="modal" data-target="#confirmDelete" data-title="Delete Post" data-message='Are you sure you want to delete this post ?'>
+			        <span class="glyphicon glyphicon-trash"></span> Delete
+			    </button>
+			{!! Form::close() !!}
+		@endif
+		
+		
 	</div>
-	{!! Form::close() !!}
+	
+	
+
+	
+	
 </div>
 
 
@@ -41,5 +60,8 @@
 
 </div>
 </div>
+
+@include('_delete')
+
 @endsection
 

@@ -12,6 +12,7 @@ use App\Department;
 use App\Project;
 use App\Source;
 use App\Staff;
+use App\User;
 
 use Sentinel;
 
@@ -31,6 +32,7 @@ class PostsController extends Controller
       {
           $this->post = $post;
           $this->middleware('admin', ['only' => 'destroy']);
+          $this->middleware('owner', ['only' => 'update']);
       }
     
     
@@ -42,20 +44,33 @@ class PostsController extends Controller
     public function index()
     {
         //
+        //$posts = Post::select('id', 'headline')->orderBy('created_at', 'DESC')->get(); 
+        
+        // Get this post comments
+        //$posts = $this->post->select('id', 'headline')->orderBy('created_at', 'DESC')->get();
         
         
+		$posts = Post::join('users', function ($join) {
+		            $join->on('posts.user_id', '=', 'users.id');
+		        })->select('posts.id', 'posts.headline', DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'posts.publish_date')->orderBy('posts.publish_date', 'DESC')
+		        ->get();
+        
+        
+        return view('posts.index', compact('posts'));
+        
+        /*
         if(Sentinel::getUser()->inRole('admins')) {      
         	$posts = $this->post->orderBy('created_at', 'DESC')->paginate(25); 
         }else{        
 	        $user = Sentinel::getUser()->id;
 	        $posts = $this->post->where('user_id', $user)->orderBy('created_at', 'DESC')->paginate(25);
         }
-       
+        */
         
-         
+        //return view('posts.index', compact('posts'));
         
-        return view('posts.index', compact('posts'));
     }
+    
 
     /**
      * Show the form for creating a new resource.

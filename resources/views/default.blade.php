@@ -27,6 +27,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="{{ asset ("/bower_components/admin-lte/plugins/timepicker/bootstrap-timepicker.min.css") }}" rel="stylesheet" type="text/css" />
     <!-- Select2 -->
     <link href="{{ asset ("/bower_components/admin-lte/plugins/select2/select2.min.css") }}" rel="stylesheet" type="text/css" />
+    <!-- jsGrid -->
+    <link href="{{ asset ("/bower_components/admin-lte/plugins/jsgrid/dist/jsgrid.min.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset ("/bower_components/admin-lte/plugins/jsgrid/dist/jsgrid-theme.min.css") }}" rel="stylesheet" type="text/css" />
+    
     
     
     <!-- Theme style -->
@@ -112,11 +116,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset ("/bower_components/admin-lte/plugins/iCheck/icheck.min.js") }}" type="text/javascript"></script>
 <!-- FastClick -->
 <script src="{{ asset ("/bower_components/admin-lte/plugins/fastclick/fastclick.min.js") }}" type="text/javascript"></script>
-
+<!-- jsGrid -->
+<script src="{{ asset ("/bower_components/admin-lte/plugins/jsgrid/dist/jsgrid.min.js") }}" type="text/javascript"></script>
 
 
 <!-- AdminLTE App -->
 <script src="{{ asset ("/bower_components/admin-lte/dist/js/app.min.js") }}" type="text/javascript"></script>
+
+ @yield('scripts')
 
 <!-- Page script -->
 <script type="text/javascript">

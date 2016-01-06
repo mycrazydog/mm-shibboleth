@@ -45,6 +45,15 @@ class Post extends Model
 	}
 	
 	/**
+	 * Get the departments for the post
+	 */
+	public function departments(){
+		
+		return $this->belongsToMany('App\Department', 'post_department');
+		
+	}
+	
+	/**
 	 * Get the staffs for the post
 	 */
 	public function sources(){

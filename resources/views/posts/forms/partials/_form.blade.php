@@ -154,7 +154,7 @@
 	var selectedValuesStaff = [];
 	@if(isset($staff_selected))
 	   var selectedValuesStaff = {!! $staff_selected !!};    
-	@endif
+	@endif	
 	</script>	
 
   {!! Form::label('staff_list', 'Institute Staff Involved') !!}  
@@ -169,13 +169,25 @@
 </div><!-- /.form-group -->
 
 <div class="form-group">
+	<script type="text/javascript">
+	var selectedValuesDepartment = [];
+	@if(isset($department_selected))
+	   var selectedValuesDepartment = {!! $department_selected !!};    
+	@endif	
+	</script>	
+
+
   {!! Form::label('department_id', 'UNCC entity involved in collaboration') !!}
   <a data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" 
   data-content="If the event is a collaboration, enter the name of the outside organization or department.">
   <span class="badge bg-blue"><i class="fa fa-info"></i></span>
   </a>  
   
-  {!! Form::select('department_id', $department_options, Input::old('department_id'), ['class' => 'form-control select2', 'placeholder' => 'Please select']) !!}
+   <span>You may select multiple departments</span>  
+  
+  <!--Form::select('department_id', $department_options, Input::old('department_id'), ['class' => 'form-control select2', 'placeholder' => 'Please select']) -->
+  {!! Form::select('department_list[]', $department_options, null, ['id' => 'department_list','class' => 'form-control multi', 'multiple' => 'multiple']) !!}
+  
 </div><!-- /.form-group -->
 
 <div class="form-group">

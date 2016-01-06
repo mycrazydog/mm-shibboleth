@@ -82,6 +82,8 @@ class PostsController extends Controller
         //
         //Populate the select(dropdowns)
         $department_options = Department::lists('name', 'id');
+        //dd($department_options);
+        
         //$project_options = Project::lists('name', 'id');
         $source_options = Source::lists('name', 'id');        
         $staff_options = Staff::select('Id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'))->orderBy('first_name')->lists('full_name', 'Id');
@@ -120,7 +122,7 @@ class PostsController extends Controller
 		//$post -> source_id = ($request->source_id == null) ? null : $request->source_id;
 		$post -> publish_date = ($request->publish_date == null) ? null : date('Y-m-d', strtotime($request->publish_date));;    
 		$post -> writer_collaborator = $request->writer_collaborator;
-		$post -> department_id = ($request->department_id == null) ? null : $request->department_id;
+		//$post -> department_id = ($request->department_id == null) ? null : $request->department_id;
 		//$post -> project_id = ($request->project_id == null) ? null : $request->project_id;
         $post -> notes = $request->notes;
         $post -> url = $request->url;
@@ -159,6 +161,10 @@ class PostsController extends Controller
         
         if (Input::get('staff_list')) {
         	$post->staffs()->sync(Input::get('staff_list'));  
+        }
+        
+        if (Input::get('department_list')) {
+        	$post->departments()->sync(Input::get('department_list'));  
         } 
         
         if (Input::get('source_list')) {
@@ -204,8 +210,15 @@ class PostsController extends Controller
         $post = Post::findOrFail($id);
         
         //Populate the select(dropdowns)
-        $department_options = Department::lists('name', 'id');
-        $department_id = $post->department_id;
+        
+        //$department_options = Department::lists('name', 'id');
+        //$department_id = $post->department_id;
+        $department_options = Department::lists('name', 'id');        
+        $department_selected = $post->departments->lists('id');
+        
+        
+                      
+        
         //$project_options = Project::lists('name', 'id');
         //$project_id = $post->project_id;
         
@@ -216,7 +229,7 @@ class PostsController extends Controller
         $staff_selected =  $post->staffs->lists('id');
         
         // Show the page        
-        return view('posts.forms.edit',compact('post','department_options','department_id','source_options','source_selected', 'staff_options', 'staff_selected'));
+        return view('posts.forms.edit',compact('post','department_options','department_selected','source_options','source_selected', 'staff_options', 'staff_selected'));
     }
 
     /**
@@ -261,14 +274,20 @@ class PostsController extends Controller
 	    	    
         $post -> publish_date = ($request->publish_date == null) ? null : date('Y-m-d', strtotime($request->publish_date));;    
 	    $post -> writer_collaborator = $request->writer_collaborator;
-	    $post -> department_id = ($request->department_id == null) ? null : $request->department_id;
+	    //$post -> department_id = ($request->department_id == null) ? null : $request->department_id;
 	    //$post -> project_id = ($request->project_id == null) ? null : $request->project_id;
 	    $post -> notes = $request->notes;
 	    $post -> url = $request->url;
 	    
 	     if (Input::get('staff_list')) {
 	    	$post->staffs()->sync(Input::get('staff_list'));  
-	    }    
+	    }
+	    
+	     if (Input::get('department_list')) {
+	     
+	     
+	    	$post->departments()->sync(Input::get('department_list'));  
+	    }        
 	
 //	    $attachment = "";
 //	    if(Input::hasFile('attachment'))

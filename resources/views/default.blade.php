@@ -167,6 +167,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {
     	$("#staff_list").select2().select2('val', selectedValuesStaff)
     }
+    
+    if ($("#department_list").length > 0)
+    {
+    	$("#department_list").select2().select2('val', selectedValuesDepartment)
+    }
 
     //Datemask dd/mm/yyyy
     $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});

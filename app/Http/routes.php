@@ -90,7 +90,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'manage'], function() {
     Route::resource('departments', 'DepartmentsController');
     Route::resource('sources', 'SourcesController');
     Route::resource('staff', 'StaffController');
-    Route::get('reports', 'ReportsController@index');
+    Route::get('report_staff', 'ReportsController@staffIndex');
+    Route::get('report_category', 'ReportsController@categoryIndex');
+    Route::post('report_category_post', 'ReportsController@postCategory');
 
 
 

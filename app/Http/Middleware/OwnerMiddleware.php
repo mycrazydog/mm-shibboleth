@@ -52,11 +52,15 @@ class OwnerMiddleware
 		$user = Sentinel::getUser();
 		$admin = Sentinel::findRoleByName('Admins');
 		
+
 		
 		
-		if (($post->user_id !== $user->id) || ($user->inRole($admin))){
-		    //abort(403, 'Unauthorized action.');
-		    return Redirect::route('manage.posts.index')->with('warning', 'You cannot edit an entry you did not create'); 
+		
+		if (($post->user_id !== $user->id)){
+			if(!$user->inRole($admin)){
+			    //abort(403, 'Unauthorized action.');
+			    return Redirect::route('manage.posts.index')->with('warning', 'You cannot edit an entry you did not create'); 
+		    }
 		}
 		
 		return $next($request);    

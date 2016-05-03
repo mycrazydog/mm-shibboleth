@@ -45,10 +45,11 @@
 			@if(Sentinel::getUser()->inRole('admins'))			
 			<li class="{{ set_active_admin('manage/admin/profiles') }}"><a href="/manage/admin/profiles"><i class="fa fa-users"></i> List Users</a></li>
 			
-            <li class="treeview {{ set_active('manage/reports') }}">
+            <li class="treeview {{ set_active('manage/reports') }} {{ set_active('manage/report_staff') }} {{ set_active('manage/report_category') }}">
                 <a href="#"><span><i class="fa fa-book"></i> Reports</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-			        <li class="{{ set_active('manage/reports') }}"><a href="{{ url('manage/reports') }}">Full Report</a></li>
+			        <li class="{{ set_active('manage/report_staff') }}"><a href="{{ url('manage/report_staff') }}">UI Staff report</a></li>
+			         <li class="{{ set_active('manage/report_category') }}"><a href="{{ url('manage/report_category') }}">Writer/Collaborator report</a></li>
                 </ul>
             </li>
             @endif

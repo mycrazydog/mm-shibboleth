@@ -2,7 +2,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo"><b>COMMUNITY</b>ENGAGEMENT</a>
+    <a href="{{ url('manage/posts') }}" class="logo"><b>COMMUNITY</b>ENGAGEMENT</a>
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">

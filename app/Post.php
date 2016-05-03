@@ -61,5 +61,49 @@ class Post extends Model
 		return $this->belongsToMany('App\Source');
 		
 	}
-       
+	
+	
+	
+	
+	 	
+	public function scopeMediaMention($query)
+	{
+	    return $query->orWhere('media_mention', 1);
+	}	
+	public function scopePresentation($query)
+	{
+	    return $query->orWhere('presentation', 1);
+	}	
+	public function scopeMeeting($query)
+	{
+	    return $query->orWhere('meeting', 1);
+	}  
+	public function scopeTestimonial($query)
+	{
+	    return $query->orWhere('testimonial', 1);
+	}   
+	public function scopeSponsoredEvent($query)
+	{
+	    return $query->orWhere('sponsored_event', 1);
+	} 
+	public function scopeOnCampusCollaboration($query)
+	{
+	    return $query->orWhere('on_campus_collaboration', 1);
+	}    
+	public function scopeOffCampusCollaboration($query)
+	{
+	    return $query->orWhere('off_campus_collaboration', 1);
+	}       
+    public function scopeAchievement($query)
+    {
+        return $query->orWhere('achievement', 1);
+    } 
+    public function scopeSatifactionSurvey($query)
+    {
+        return $query->orWhere('satifaction_survey', 1);
+    }      
+    public function scopeOther($query)
+    {
+        return $query->orWhere('other', 1);
+    }   
 }

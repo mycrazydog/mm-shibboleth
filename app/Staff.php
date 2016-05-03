@@ -16,7 +16,5 @@ class Staff extends Model
     {
         return $this->belongsToMany('App\Post');
     }
-    
-    
-    
+         
 }

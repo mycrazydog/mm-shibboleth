@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Sentinel
- * @version    2.0.7
+ * @version    2.0.9
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011-2015, Cartalyst LLC
@@ -263,7 +263,7 @@ class Sentinel
     /**
      * Checks if we are currently a guest.
      *
-     * @return \Cartalyst\Sentinel\Users\UserInterface|bool
+     * @return bool
      */
     public function guest()
     {
@@ -548,7 +548,7 @@ class Sentinel
         $activeCheckpoints = [];
 
         foreach (array_keys($originalCheckpoints) as $checkpoint) {
-            if (in_array($checkpoint, $checkpoints)) {
+            if ($checkpoints && ! in_array($checkpoint, $checkpoints)) {
                 $activeCheckpoints[$checkpoint] = $originalCheckpoints[$checkpoint];
             }
         }

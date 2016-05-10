@@ -109,7 +109,7 @@ class ReportsController extends Controller
        	}))->with(array('staffs' => function($query)
        	{
        	    $query->addSelect(array(DB::raw("concat(staff.first_name, ' ', staff.last_name) as `name`")));
-       	}))->select('id', 'headline');
+       	}))->select('id', 'headline', 'writer_collaborator');
        	
        	$posts = $posts->get();	
        	
@@ -139,7 +139,7 @@ class ReportsController extends Controller
     	       	}))->with(array('staffs' => function($query)
 	       		{
 	       		    $query->addSelect(array(DB::raw("concat(staff.first_name, ' ', staff.last_name) as `name`")));
-	       		}))->select('id', 'headline');	
+	       		}))->select('id', 'headline', 'writer_collaborator');	
 
 	
 

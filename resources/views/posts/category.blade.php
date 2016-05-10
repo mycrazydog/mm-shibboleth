@@ -5,9 +5,10 @@
 			<table class="table table-striped">
 			    <thead>
 			        <tr>
-			            <th style="width:5%">Post Id</th>
-			            <th style="width:50%">Headline</th>
-			            <th style="width:20%">Writer/Collaborator</th>
+			            <th style="width:2%">Post Id</th>
+			            <th style="width:23%">Headline</th>
+			            <th style="width:25%">Staff</th>
+			            <th style="width:25%">Writer/Collaborator</th>
 			            <th style="width:25%">Department</th>
 			        </tr>
 			    </thead>
@@ -23,6 +24,7 @@
 			            	<span class="label label-success">({{ $staff->name }})</span>			            	
 			            @endforeach				            
 			            </td>
+			            <td>{!! $post->writer_collaborator !!}</td>
 			            <td style="width: 100px;">
 			            @foreach ($post->departments as $department)
 			            	<span class="label label-primary">({{ $department->name }})</span> 			            	

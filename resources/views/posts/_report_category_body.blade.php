@@ -86,8 +86,7 @@
 
 					<div class="checkbox">
 						<label>
-						  {!! Form::checkbox('other', 1) !!}
-						  
+						  {!! Form::checkbox('other', 1) !!}						  
 						  Other
 						</label>
 					</div> 	
@@ -97,6 +96,52 @@
 		                
              
         </div>
+        <div class="col-sm-12">
+        
+	        <div class="form-group">			
+				{!! Form::label('staff', 'Institute Staff Involved') !!}  
+				<a data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Select the name of the staff member involved">
+					<span class="badge bg-blue"><i class="fa fa-info"></i></span>
+				</a>
+	 	          
+				{!! Form::select('staff', (['0' => ''] + $staff_options), null, ['id' => 'staff','class' => 'form-control']) !!}
+	        </div><!-- /.form-group -->
+        	        
+        </div>
+        <div class="col-sm-6">
+        	<div class="form-group">
+        	  {!! Form::label('publish_date', 'Publish date/Event date ') !!}  
+        	  <a data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Enter the date of the media mention.">
+        	  	<span class="badge bg-blue"><i class="fa fa-info"></i></span>
+        	  </a>
+        	  
+        	  <div class="input-group">
+        	    <div class="input-group-addon">
+        	      <i class="fa fa-calendar"></i>
+        	    </div>
+        	   
+        	    {!! Form::text('publish_date_from', null, ['class' => 'form-control reservation']) !!}
+        	  </div><!-- /.input group -->
+        	</div><!-- /.form group -->
+        </div> 
+        <div class="col-sm-6">
+        	<div class="form-group">
+        	  {!! Form::label('publish_date', 'Publish date/Event date ') !!}  
+        	  <a data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Enter the date of the media mention.">
+        	  	<span class="badge bg-blue"><i class="fa fa-info"></i></span>
+        	  </a>
+        	  
+        	  <div class="input-group">
+        	    <div class="input-group-addon">
+        	      <i class="fa fa-calendar"></i>
+        	    </div>
+        	   
+        	    {!! Form::text('publish_date_to', null, ['class' => 'form-control reservation']) !!}
+        	  </div><!-- /.input group -->
+        	</div><!-- /.form group -->
+        </div>  
+        
+        
         <div class="col-sm-6">  <button type="submit" name="action" value="query" class="btn btn-info pull-right btn-block btn-lg"><i class="fa fa-database" aria-hidden="true"></i>&nbsp;&nbsp;Query</button> </div>
         <div class="col-sm-6">  <button type="submit" name="action" value="excel" class="btn btn-info pull-right btn-block btn-lg"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export To Excel</button> </div>
         
@@ -104,37 +149,7 @@
 	{!! Form::close() !!}		
 	</div><!-- /row -->
 	
-	
-	
-
-@if(isset($posts))
-	<div class="row invoice-info">
-		<div class="col-md-12 table-responsive">
-			<table class="table table-striped">
-			    <thead>
-			        <tr>
-			            <th style="width:5%">Post Id</th>
-			            <th style="width:50%">Headline</th>
-			            <th style="width:20%">Writer/Collaborator</th>
-			            <th style="width:25%">Department</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			        @foreach ($posts as $post)        
-			        <tr>
-			            <td style="width: 100px;">{!! $post->post_id !!}</td>
-			            <td style="width: 100px;">
-			            <a href="/manage/posts/{!! $post->post_id !!}/edit" target="_blank" class="">{!! $post->post_headline !!}</a>
-			            </td>
-			            <td style="width: 100px;">{!! $post->post_wc !!}</td>			            
-			            <td>{!! $post->post_dept !!}</td>
-			        </tr>	
-			        @endforeach
-			    </tbody>
-			</table>
-		</div><!-- /.col -->	
-	</div><!-- /.row --> 
-@endif
+	@include('posts/category')
 	
     
 </section>

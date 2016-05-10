@@ -139,7 +139,7 @@
       <i class="fa fa-calendar"></i>
     </div>
    
-    {!! Form::text('publish_date', null, ['id' => 'reservation','class' => 'form-control', 'placeholder' => 'Other']) !!}
+    {!! Form::text('publish_date', null, ['class' => 'form-control reservation', 'placeholder' => 'Other']) !!}
   </div><!-- /.input group -->
 </div><!-- /.form group -->
 

@@ -99,10 +99,23 @@ class ReportsController extends Controller
     public function categoryIndex()
     {
         //
+        $staff_options = Staff::select('Id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'))->orderBy('first_name')->lists('full_name', 'Id')->toArray();
               	
-      
+       //$posts =  Post::all(); 
        
-       return view('posts.report_category')->withInput(Input::all());       
+       	$posts =  Post::with(array('departments' => function($query)
+       	{
+       	    $query->addSelect(array('name'));
+       	}))->with(array('staffs' => function($query)
+       	{
+       	    $query->addSelect(array(DB::raw("concat(staff.first_name, ' ', staff.last_name) as `name`")));
+       	}))->select('id', 'headline');
+       	
+       	$posts = $posts->get();	
+       	
+       	      
+       return view('posts.report_category', compact('posts', 'staff_options'))->withInput(Input::all()); 
+ 
        
        
     }
@@ -117,12 +130,22 @@ class ReportsController extends Controller
     	       	
     	       	
     	       	Input::flash();
-    	       	$posts =  Post::query();
     	       	
-    	       	$posts = $posts->select('posts.id AS post_id', 'posts.headline AS post_headline', 'posts.writer_collaborator AS post_wc', 'departments.name AS post_dept')->leftJoin('departments', 'posts.department_id', '=', 'departments.id');
-    	       		
-    	
+    	       	$staff_options = Staff::select('Id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'))->orderBy('first_name')->lists('full_name', 'Id')->toArray();
+    	       		    	       	    	       	
+    	       	$posts =  Post::with(array('departments' => function($query)
+    	       	{
+    	       	    $query->addSelect(array('name'));
+    	       	}))->with(array('staffs' => function($query)
+	       		{
+	       		    $query->addSelect(array(DB::raw("concat(staff.first_name, ' ', staff.last_name) as `name`")));
+	       		}))->select('id', 'headline');	
 
+	
+
+	
+
+    	           	
     			if(Input::has('media_mention'))
     			{
     				$posts = $posts->mediamention();			
@@ -145,7 +168,7 @@ class ReportsController extends Controller
     			} 
     			if(Input::has('on_campus_collaboration'))
     			{
-    				$posts = $posts->oncampuscollaboration();			
+    				$posts = $posts->orWhere('on_campus_collaboration', 1);			
     			} 
     			if(Input::has('off_campus_collaboration'))
     			{
@@ -161,29 +184,76 @@ class ReportsController extends Controller
     			} 
     			if(Input::has('other'))
     			{
-    				$posts = $posts->other();			
+    				$posts = $posts->orWhere('other', 1);			
     			} 
     			
+    			if(Input::has('staff'))
+    			{
+    				if(Input::get('staff') != 0)
+    				{    				
+	    				$posts = $posts->whereHas('staffs', function ($query) {
+	    				   $query->where('id', '=', Input::get('staff'));
+	    				});	
+    				}
+    			} 
     			
+
     			
-    			
-    			
+    			if((Input::has('publish_date_from')) || (Input::has('publish_date_to')))
+    			{
+    				
+    				$from = date('Y-m-d', strtotime(Input::get('publish_date_from')));
+    				
+    				if(Input::has('publish_date_to'))
+    				{
+    					$to = date('Y-m-d', strtotime(Input::get('publish_date_to')));
+    				}else{
+    					$to = date('Y-m-d', strtotime(Carbon::now()));
+    				}
+    				
+    				
+    				
+    			    $posts = $posts->whereBetween('publish_date', array($from, $to));		
+    			}   			
     			
     	
     			$posts = $posts->get();
+    			
+    			
+    				
+    				//dd($posts);   			
+    				
+    			
+    			/*$posts = $posts->with(['departments' => function($query) {
+    				    $query->select('name');
+    				}])->get();*/
+    			
+    						
+      			
+    			// I do this mapping to flatten the nested arrays
+    		
+//    			$posts = array_map(function($val)
+//    			    {
+//    			      return array_dot($val);
+//    			    }, $posts);
+
+
+
+    				       	
     			
     			
     			$action = Input::get('action', 'none');
     			
     			if($action=='query'){
     			   
-    			   return view('posts.report_category', compact('posts'))->withInput(Input::all()); 
+    			   return view('posts.report_category', compact('posts', 'staff_options'))->withInput(Input::all()); 
     			   
     			}else if($action=='excel'){
 
-					Excel::create('posts', function($excel) use($posts) {
-					    $excel->sheet('Category', function($sheet) use($posts) {
-					        $sheet->fromArray($posts);
+					Excel::create('Filename', function($excel) use($posts) {
+					    $excel->sheet('Sheetname', function($sheet) use($posts) {
+					        //$sheet->fromArray($posts);
+					        $sheet->loadView('posts.category')->with('posts', $posts);
 					    });
 					})->export('xls');
 

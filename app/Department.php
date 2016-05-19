@@ -14,6 +14,6 @@ class Department extends Model
      */
     public function posts()
     {
-        return $this->belongsToMany('App\Post', 'post_department');
+        return $this->belongsToMany('App\Post', 'post_department', 'department_id', 'post_id');
     }
 }

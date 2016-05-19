@@ -29,7 +29,7 @@
 			            @foreach ($post->departments as $department)
 			            	<span class="label label-primary">({{ $department->name }})</span> 			            	
 			           	@endforeach		            
-			            </td> 
+			            </td>
 			        </tr>	
 			        @endforeach
 			    </tbody>

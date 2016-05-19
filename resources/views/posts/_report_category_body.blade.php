@@ -141,6 +141,15 @@
         	</div><!-- /.form group -->
         </div>  
         
+        <div class="col-sm-12">
+        
+            <div class="form-group">			
+        		{!! Form::label('detail', 'Detail level') !!}          	          
+        		{!! Form::select('detail', ['0' => 'simple', '1' => 'full'], null, ['id' => 'detail','class' => 'form-control']) !!}
+            </div><!-- /.form-group -->
+        	        
+        </div>
+        
         
         <div class="col-sm-6">  <button type="submit" name="action" value="query" class="btn btn-info pull-right btn-block btn-lg"><i class="fa fa-database" aria-hidden="true"></i>&nbsp;&nbsp;Query</button> </div>
         <div class="col-sm-6">  <button type="submit" name="action" value="excel" class="btn btn-info pull-right btn-block btn-lg"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export To Excel</button> </div>
@@ -149,7 +158,14 @@
 	{!! Form::close() !!}		
 	</div><!-- /row -->
 	
-	@include('posts/category')
+	@if(isset($detail))
+	    @if($detail == 1)
+	    	@include('posts/category_full')	
+	    @else
+	    	@include('posts/category') 		    
+	    @endif	       	
+	@endif
+	
 	
     
 </section>

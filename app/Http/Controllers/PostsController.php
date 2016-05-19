@@ -160,11 +160,11 @@ class PostsController extends Controller
         
         
         if (Input::get('staff_list')) {
-        	$post->staffs()->sync(Input::get('staff_list'));  
+        	$post->staffs()->attach(Input::get('staff_list'));  
         }
         
         if (Input::get('department_list')) {
-        	$post->departments()->sync(Input::get('department_list'));  
+        	$post->departments()->attach(Input::get('department_list'));  
         } 
         
         if (Input::get('source_list')) {
@@ -279,15 +279,18 @@ class PostsController extends Controller
 	    $post -> notes = $request->notes;
 	    $post -> url = $request->url;
 	    
-	     if (Input::get('staff_list')) {
-	    	$post->staffs()->sync(Input::get('staff_list'));  
-	    }
 	    
-	     if (Input::get('department_list')) {
+	    
+	     //Add this additional check. If input tag is null then empty array is used. Needed for sync()
+	    //$tags = $this->request->input('tags', []);
+	    
+	    $staffs = Input::get('staff_list', []);
+	    $post->staffs()->sync($staffs);   
+
+    	$departments =  Input::get('department_list', []);
+    	$post->departments()->sync($departments);  
+   
 	     
-	     
-	    	$post->departments()->sync(Input::get('department_list'));  
-	    }        
 	
 //	    $attachment = "";
 //	    if(Input::hasFile('attachment'))
@@ -311,6 +314,15 @@ class PostsController extends Controller
 
 
 	    $post -> save();
+
+	    
+	    
+ 
+	    
+	    
+	    
+	    
+	    
 //	    if(Input::hasFile('attachment'))
 //	    {
 //	        $destinationPath = public_path() . '/resources/'.$post->id.'/';

@@ -49,7 +49,7 @@ class Post extends Model
 	 */
 	public function departments(){
 		
-		return $this->belongsToMany('App\Department', 'post_department');
+		return $this->belongsToMany('App\Department', 'post_department', 'post_id', 'department_id');
 		
 	}
 	

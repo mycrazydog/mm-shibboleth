@@ -4,13 +4,7 @@
 
 @section('content')
 	
-	@include('posts/_report_category_body')
-	
-	<div id="nnnjsGrid"></div>	
+	@include('posts/_report_category_body')	
 
 @endsection
 
-@section('scripts')
-
-
-@endsection

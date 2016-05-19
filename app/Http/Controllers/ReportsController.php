@@ -109,7 +109,7 @@ class ReportsController extends Controller
        	}))->with(array('staffs' => function($query)
        	{
        	    $query->addSelect(array(DB::raw("concat(staff.first_name, ' ', staff.last_name) as `name`")));
-       	}))->select('id', 'headline', 'writer_collaborator');
+       	}));
        	
        	$posts = $posts->get();	
        	
@@ -131,6 +131,8 @@ class ReportsController extends Controller
     	       	
     	       	Input::flash();
     	       	
+    	       	$detail = Input::get('detail');
+    	       	
     	       	$staff_options = Staff::select('Id', DB::raw('CONCAT(first_name, " ", last_name) AS full_name'))->orderBy('first_name')->lists('full_name', 'Id')->toArray();
     	       		    	       	    	       	
     	       	$posts =  Post::with(array('departments' => function($query)
@@ -139,7 +141,7 @@ class ReportsController extends Controller
     	       	}))->with(array('staffs' => function($query)
 	       		{
 	       		    $query->addSelect(array(DB::raw("concat(staff.first_name, ' ', staff.last_name) as `name`")));
-	       		}))->select('id', 'headline', 'writer_collaborator');	
+	       		}));	
 
 	
 
@@ -246,16 +248,26 @@ class ReportsController extends Controller
     			
     			if($action=='query'){
     			   
-    			   return view('posts.report_category', compact('posts', 'staff_options'))->withInput(Input::all()); 
+    			   return view('posts.report_category', compact('posts', 'staff_options', 'detail'))->withInput(Input::all()); 
     			   
     			}else if($action=='excel'){
 
-					Excel::create('Filename', function($excel) use($posts) {
-					    $excel->sheet('Sheetname', function($sheet) use($posts) {
-					        //$sheet->fromArray($posts);
-					        $sheet->loadView('posts.category')->with('posts', $posts);
-					    });
-					})->export('xls');
+					
+					if($detail == 1){
+						Excel::create('Export', function($excel) use($posts) {
+						    $excel->sheet('Data', function($sheet) use($posts) {
+						        //$sheet->fromArray($posts);   
+						        $sheet->loadView('posts.category_full')->with('posts', $posts); 					        
+						    });
+						})->export('xls');
+					}else{					
+						Excel::create('Export', function($excel) use($posts) {
+						    $excel->sheet('Data', function($sheet) use($posts) {
+						        //$sheet->fromArray($posts);   
+						        $sheet->loadView('posts.category')->with('posts', $posts); 					        
+						    });
+						})->export('xls');				
+					}
 
     			}
     			

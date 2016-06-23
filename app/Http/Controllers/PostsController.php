@@ -52,7 +52,7 @@ class PostsController extends Controller
         
 		$posts = Post::join('users', function ($join) {
 		            $join->on('posts.user_id', '=', 'users.id');
-		        })->select('posts.id', 'posts.headline', DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'posts.publish_date')->orderBy('posts.publish_date', 'DESC')
+		        })->select('posts.id', 'posts.headline', DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'posts.publish_date')->orderBy('posts.id', 'ASC')
 		        ->get();
         
         
